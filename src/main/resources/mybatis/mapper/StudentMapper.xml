@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhsx.mapper.StudentMapper">
+
+
+    <!--查询学生根据名字-->
+    <select id="queryStudent" resultType="com.yhsx.model.Student">
+        select a.id,sname,level_id level,b.school_name schoolName,a.birthday,a.sex,a.pro_name_id proNameId,a.city_name_id cityNameId
+      from student a LEFT JOIN school b on a.school_id=b.id  where 1=1
+        <if test="s.sname !=null and s.sname !='' ">
+        and  sname like '%${s.sname}%'
+        </if>
+
+        LIMIT #{pageNumber},#{pageSize}
+
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(id) from student
+    </select>
+
+    <select id="querySchool" resultType="com.yhsx.model.School">
+       select id ,school_name schoolName from school
+
+    </select>
+
+    <insert id="saveStudent" >
+     insert  into student(sname,spassword,school_id,level_id,birthday,sex)  values(
+     #{sname},#{spassword},#{schoolId},1,#{birthday},#{sex}
+     )
+
+    </insert>
+
+    <update id="updateStudent">
+        update student set sname=#{sname},spassword=#{spassword},school_id=#{schoolId},birthday=#{birthday},sex=#{sex}
+         where id = #{id}
+    </update>
+
+    <select id="queryStudentById" resultType="com.yhsx.model.Student">
+        select a.id,sname,
+        level_id level,
+        b.school_name schoolName,
+        a.school_id schoolId,
+        DATE_FORMAT(a.birthday,'%Y-%m-%d %H:%i:%s') birthday,
+        a.sex,
+        a.spassword,
+        a.pro_name_id proNameId,
+        a.city_name_id cityNameId
+        from student a LEFT JOIN school b on a.school_id=b.id where a.id =#{id}
+    </select>
+    <select id="queryStudentByName" resultType="com.yhsx.model.Student">
+        select a.id,sname,
+        level_id level,
+        b.school_name schoolName,
+        a.school_id schoolId,
+        DATE_FORMAT(a.birthday,'%Y-%m-%d %H:%i:%s') birthday,
+        a.sex,
+        a.spassword,
+        a.pro_name_id proNameId,
+        a.city_name_id cityNameId
+        from student a LEFT JOIN school b on a.school_id=b.id where a.sname =#{sname}
+    </select>
+
+    <delete id="deleteAll"  >
+     delete from student where 1>2
+         or id in (${ids})
+    </delete>
+
+
+
+    <!--<select id="queryShoolById"  resultType="com.yhsx.model.School">-->
+        <!--select id,school_name schoolName,supper_password supperPassword from t_school where id = #{schoolId}-->
+
+    <!--</select>-->
+
+    <!--<select id="csvResult" resultType="com.yhsx.model.LevelPermissions">-->
+    <!--select b.terrain_module_csv_id terrainModuleCsvId,-->
+            <!--c.base_model_csv_id baseModelCsvId,-->
+            <!--d.sensor_model_csv_id sensorModelCsvId,-->
+            <!--e.dynamic_model_csv_id dynamicModelCsvId,-->
+            <!--a.id,a.`level`,a.electrical_properties_csv electricalPropertiesCsv,-->
+            <!--a.programming_menu_csv programmingMenuCsv-->
+            <!--from t_level a LEFT JOIN-->
+            <!--(select GROUP_CONCAT(id ORDER BY id SEPARATOR ',') AS id-->
+            <!--,GROUP_CONCAT(terrain_module_csv ORDER BY id SEPARATOR '\n') AS terrain_module_csv_id-->
+            <!--from t_terrainmodulecsv a where FIND_IN_SET(a.id,(select terrain_module_csv_id FROM t_level  where id = #{levelId}))) b-->
+            <!--on a.terrain_module_csv_id = b.id-->
+            <!--LEFT JOIN-->
+            <!--(select GROUP_CONCAT(id ORDER BY id SEPARATOR ',') AS id,-->
+            <!--GROUP_CONCAT(base_model_csv_id ORDER BY id SEPARATOR '\n') AS base_model_csv_id-->
+            <!--from t_basemodelcsv a where FIND_IN_SET(a.id,(select base_model_csv_id FROM t_level  where id = #{levelId}))) c-->
+            <!--on a.base_model_csv_id = c.id-->
+            <!--LEFT JOIN-->
+            <!--(select GROUP_CONCAT(id ORDER BY id SEPARATOR ',') AS id,-->
+            <!--GROUP_CONCAT(sensor_model_csv ORDER BY id SEPARATOR '\n') AS sensor_model_csv_id-->
+            <!--from t_sensormodelcsv a where FIND_IN_SET(a.id,(select sensor_model_csv_id  FROM t_level  where id = #{levelId}))) d-->
+            <!--on a.sensor_model_csv_id = d.id-->
+            <!--LEFT JOIN-->
+            <!--(select GROUP_CONCAT(id ORDER BY id SEPARATOR ',') AS id,-->
+            <!--GROUP_CONCAT(dynamic_model_csv ORDER BY id SEPARATOR '\n') AS dynamic_model_csv_id-->
+            <!--from t_dynamicmodelcsv a where FIND_IN_SET(a.id,(select dynamic_model_csv_id  FROM t_level  where id = #{levelId}))) e-->
+            <!--on a.dynamic_model_csv_id = e.id-->
+            <!--WHERE  a.id=#{levelId}-->
+
+    <!--</select>-->
+
+   <!--<select id="DownloadProject" resultType="com.yhsx.model.UploadSaveData">-->
+    <!--select id , assemble_save_data assembleSaveData,image_save_data imageSaveData,include_save_data includeSaveData,-->
+          <!--pgm_save_data pgmSaveData,project_name projectName ,student_id studentId,create_time createTime-->
+          <!--from t_uploadsavedata where student_id = #{id}-->
+
+   <!--</select>-->
+
+
+
+</mapper>

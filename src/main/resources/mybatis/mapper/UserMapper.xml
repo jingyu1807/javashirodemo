@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhsx.mapper.UserMapper">
+
+
+    <!--用户查询-->
+    <select id="queryUserByName" resultType="com.yhsx.model.User">
+        select id,password,user_name userName from user where user_name= #{userName}
+    </select>
+
+</mapper>

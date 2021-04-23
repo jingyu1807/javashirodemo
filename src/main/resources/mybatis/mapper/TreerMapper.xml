@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhsx.mapper.TreeMapper">
+
+
+    <!--递归树查询-->
+    <select id="queryTreeList" resultType="com.yhsx.model.Tree">
+        select id,text,pid,url from tree where pid= #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yhsx.mapper.LogMapper">
+
+
+    <!--用户查询-->
+    <select id="queryStudentLog" resultType="com.yhsx.model.SaveLog">
+        select
+        a.log
+        from save_log a
+        where 1=1
+        LIMIT #{pageNumber},#{pageSize}
+    </select>
+
+    <!--公共sql -->
+<sql id="querySql">
+where 1=1
+<if test="u.l_Name!=null and u.l_Name!=''">
+ and l_Name like '%${u.l_Name}%' or gs_Name like '%${u.l_Name}%'
+</if>
+</sql>
+
+</mapper>

@@ -1,0 +1,16 @@
+server:
+  port: 8764
+spring:
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+  profiles:
+    active: @activatedProperties@
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
